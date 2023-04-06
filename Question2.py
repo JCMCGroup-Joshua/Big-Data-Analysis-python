@@ -2,7 +2,6 @@ def Run():
     print("Starting Question 2")
     import pandas as pd
     import matplotlib.pyplot as plt
-    import numpy as np
     from tqdm import tqdm
     # Load your dataset
     df = pd.read_csv('Question2Data.csv')
@@ -15,23 +14,16 @@ def Run():
             df['time_in_hospital'])
         pbar.update()
 
-    # Create a heatmap
+    # Create a stacked bar chart
     with tqdm(total=1) as pbar:
-        pbar.set_description("Creating heatmap...")
+        pbar.set_description("Creating stacked bar chart...")
         data = pd.pivot_table(df, values='time_in_hospital', index='admission_source_id',
-                              aggfunc=np.mean)
+                              columns='referral_source', aggfunc='mean')
         fig, ax = plt.subplots(figsize=(10, 6))
-        im = ax.imshow(data, cmap='viridis')
+        data.plot(kind='bar', stacked=True, ax=ax)
 
-        # Create colorbar
-        cbar = ax.figure.colorbar(im, ax=ax)
-        cbar.ax.set_ylabel("Time Spent in Hospital", rotation=-90, va="bottom")
-
-        # Set tick labels and title
-        ax.set_xticklabels(data.columns)
-        ax.set_yticklabels(data.index)
-        ax.set_xlabel('Referal Sauce')
-        ax.set_ylabel('Admission Source ID')
+        ax.set_xlabel('Admission Source ID')
+        ax.set_ylabel('Time Spent in Hospital')
         ax.set_title(f'Correlation: {corr:.2f}')
 
         plt.show()
