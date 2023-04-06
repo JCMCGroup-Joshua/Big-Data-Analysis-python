@@ -4,7 +4,7 @@ def Run():
     import matplotlib.pyplot as plt
     from tqdm import tqdm
     # Load your dataset
-    df = pd.read_csv('Question2Data.csv')
+    df = pd.read_csv('Question2DataAlt.csv')
 
     # Calculate the correlation between age range and time spent in the hospital
     corr = None
