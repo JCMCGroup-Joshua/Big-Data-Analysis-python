@@ -14,23 +14,16 @@ def Run():
             df['time_in_hospital'])
         pbar.update()
 
-    # Create a scatter line chart with subplots
+    # Create a scatter plot
     with tqdm(total=1) as pbar:
-        pbar.set_description("Creating scatter line chart with subplots...")
-        fig, axs = plt.subplots(nrows=3, ncols=2, figsize=(12, 12))
-        admission_types = sorted(df['admission_source_id'].unique())
+        pbar.set_description("Creating scatter plot...")
+        fig, ax = plt.subplots(figsize=(10, 6))
 
-        for i, admission_type in enumerate(admission_types):
-            ax = axs[i // 2, i % 2]
-            ax.set_title(f'Admission Type: {admission_type}')
-            data = df[df['admission_source_id'] == admission_type]
-            ax.plot(data['time_in_hospital'],
-                    data['admission_source_id'], '-o', color='blue')
-            ax.set_xlabel('Time Spent in Hospital')
-            ax.set_ylabel('Referal Sauce')
-
-        fig.suptitle(f'Correlation: {corr:.2f}')
-        plt.tight_layout()
+        ax.scatter(df['admission_source_id'],
+                   df['time_in_hospital'], color='blue')
+        ax.set_xlabel('Referal Sauce')
+        ax.set_ylabel('Time Spent in Hospital')
+        ax.set_title(f'Correlation: {corr:.2f}')
 
         plt.show()
         pbar.update()
