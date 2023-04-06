@@ -18,7 +18,7 @@ def Run():
     with tqdm(total=1) as pbar:
         pbar.set_description("Creating stacked bar chart...")
         data = pd.pivot_table(df, values='time_in_hospital', index='admission_source_id',
-                              columns='referral_source', aggfunc='mean')
+                              columns='admission_source_id', aggfunc='mean')
         fig, ax = plt.subplots(figsize=(10, 6))
         data.plot(kind='bar', stacked=True, ax=ax)
 
