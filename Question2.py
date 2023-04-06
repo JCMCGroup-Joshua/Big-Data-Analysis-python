@@ -14,7 +14,7 @@ def Run():
             df['time_in_hospital'])
         pbar.update()
 
-    # Create a stacked bar chart
+    # Create a stacked bar chart with value labels
     with tqdm(total=1) as pbar:
         pbar.set_description("Creating stacked bar chart...")
         data = pd.pivot_table(df, values='time_in_hospital', index='admission_source_id',
@@ -25,6 +25,11 @@ def Run():
         ax.set_xlabel('Admission Source ID')
         ax.set_ylabel('Time Spent in Hospital')
         ax.set_title(f'Correlation: {corr:.2f}')
+
+        # Add value labels to each bar
+        for i, j in enumerate(data):
+            for k, v in enumerate(data[j]):
+                ax.text(i, v / 2, "{:.2f}".format(v), ha='center', fontsize=8)
 
         plt.show()
         pbar.update()
